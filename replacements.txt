@@ -84,6 +84,7 @@ rel	set-s945	16	conj
 dep	set-s945	18	16
 dep	set-s1886	15	16
 rel	set-s1886	15	case
+dep	set-s1886	16	9
 dep	set-s1922	23	18
 rel	set-s1922	23	conj
 dep	set-s1922	25	23
@@ -110,7 +111,7 @@ dep	set-s543	20	23
 rel	set-s543	20	conj
 dep	set-s559	14	19
 dep	set-s559	19	4
-dep	set-s559	19	nsubj
+rel	set-s559	19	nsubj
 dep	set-s597	15	9
 rel	set-s597	15	conj
 dep	set-s597	19	15
