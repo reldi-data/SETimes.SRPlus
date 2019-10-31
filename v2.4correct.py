@@ -72,14 +72,31 @@ for line in depdata:							#read the file to be corrected
 					correct_upos('SCONJ','ADV')     # 'advmod' is 'SCONJ', ADP, NOUN
 					if re.match(r'.+ADP.+', deptable[i][8]):  
 						deptable[i][7] = deprel[0]+":"+"case"
-					if re.match(r'.+NOUN.+', deptable[i][8]):  #'advmod' is 'NOUN', 'ADP'
+					if re.match(r'.+NOUN.+', deptable[i][8]):  
 						deptable[i][7] = deprel[0]+":"+"nmod"																
 				if rel =="det":                    # 'det' is ADJ, PART, CCONJ, X, NUM
 					correct_upos('ADJ','DET')				 	
 					correct_upos('PART','DET')
 					correct_upos('CCONJ','DET')
 					correct_upos('X','DET')		
-					correct_upos('NUM','DET')																			
+					correct_upos('NUM','DET')
+				if rel == "goeswith":					# in hr500k, e.g. "do sada" 
+					if re.match(r'.+ADP.+', deptable[i][8]):
+						deptable[i][7] = deprel[0]+":"+"case"	
+					else: 
+						deptable[i][7] = deprel[0]+":"+"amod"
+				if rel == "appos":                 # in hr500k mostly wrong rel appos
+					if int(dep) >= i:
+						deptable[i][7] = deprel[0]+":"+"amod"
+				if rel == "flat:foreign":          # in hr500k mostly indeclinable
+					if int(dep) >= i:
+						deptable[i][7] = deprel[0]+":"+"nmod"
+				if rel == "conj":                  # in hr500k coordinated modifiers 
+					if int(dep) >= i:
+						if re.match(r'.+NUM.+', deptable[i][8]):
+							deptable[i][7] = deprel[0]+":"+"nummod"
+						else:
+							deptable[i][7] = deprel[0]+":"+"amod"																		
 #			""" concatenate and print the result without the last tab """
 				for j in range(len(deptable[i])):
 					line = line + deptable[i][j]+"\t"
