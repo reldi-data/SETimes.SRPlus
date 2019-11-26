@@ -1,7 +1,7 @@
 # !/usr/bin/python
 # -*- coding: utf8 -*-
 
-# usage: e.g.  python v2.4correct.py ../git_SETimes.SR/SETimes.SRPlus/set.sr.plus.conll replacements.txt > temp.txt
+# usage: e.g.  python v2.4correct.py set.sr.plus.conll replacements.txt > temp.txt
 # assumes "original" conll file format 
 # print might need to be adjusted for running with python3
 
@@ -55,17 +55,20 @@ for line in depdata:							#read the file to be corrected
 				deprel = deptable[i][7].split(":")
 				dep = str(deprel[0]) 
 				rel = ':'.join(deprel[1:])
-#			""" replacements """
-				if (sent_ID, word_ID) in dep_replace:   #punct-causes-nonproj, advmod deps
+#			""" deprel replacements from an external file"""
+				if (sent_ID, word_ID) in dep_replace:   #e.g. punct-causes-nonproj 
 					dep = dep_replace[(sent_ID, word_ID)]
 				if (sent_ID, word_ID) in rel_replace:
 					rel = rel_replace[(sent_ID, word_ID)]
 				deptable[i][7] = dep+":"+rel
+#			""" upos corrections """
 				if rel == "mark":                           #'mark' should not be 'PRON'
-					if re.match(r'.+PRON.+', deptable[i][8]):  
+					if re.match(r'.+(PRON|DET).+', deptable[i][8]):  
 						deptable[i][7] = deprel[0]+":"+"nsubj"
 				if rel == "nummod":                             #'nummod' should be 'NUM'
 					correct_upos('ADJ','NUM')
+					correct_upos('ADV','NUM')
+					correct_upos('DET','NUM')
 				if rel =="det:numgov":                          #'det' is 'ADV'"
 					correct_upos('ADV','DET')
 				if rel =="advmod":                          
@@ -75,7 +78,8 @@ for line in depdata:							#read the file to be corrected
 					if re.match(r'.+NOUN.+', deptable[i][8]):  
 						deptable[i][7] = deprel[0]+":"+"nmod"																
 				if rel =="det":                    # 'det' is ADJ, PART, CCONJ, X, NUM
-					correct_upos('ADJ','DET')				 	
+					correct_upos('ADJ','DET')
+					correct_upos('ADV','DET')				 	
 					correct_upos('PART','DET')
 					correct_upos('CCONJ','DET')
 					correct_upos('X','DET')		
@@ -96,7 +100,14 @@ for line in depdata:							#read the file to be corrected
 						if re.match(r'.+NUM.+', deptable[i][8]):
 							deptable[i][7] = deprel[0]+":"+"nummod"
 						else:
-							deptable[i][7] = deprel[0]+":"+"amod"																		
+							deptable[i][7] = deprel[0]+":"+"amod"
+				if rel == "flat":
+					correct_upos('PUNCT', 'X')																				
+				if rel == "punct":
+					if re.match(r'.+AD(V|J).+', deptable[i][8]):
+						deptable[i][8] = "UposTag=PUNCT|_"
+				if rel == "cop":
+					correct_upos('VERB','AUX')																				
 #			""" concatenate and print the result without the last tab """
 				for j in range(len(deptable[i])):
 					line = line + deptable[i][j]+"\t"
