@@ -65,18 +65,20 @@ for line in depdata:							#read the file to be corrected
 				if rel == "mark":                           #'mark' should not be 'PRON'
 					if re.match(r'.+(PRON|DET).+', deptable[i][8]):  
 						deptable[i][7] = deprel[0]+":"+"nsubj"
-				if rel == "nummod":                             #'nummod' should be 'NUM'
+				if re.match(r'nummod(:gov)?', rel):       #'nummod(:gov)'  should be 'NUM'
 					correct_upos('ADJ','NUM')
 					correct_upos('ADV','NUM')
 					correct_upos('DET','NUM')
 				if rel =="det:numgov":                          #'det' is 'ADV'"
 					correct_upos('ADV','DET')
 				if rel =="advmod":                          
-					correct_upos('SCONJ','ADV')     # 'advmod' is 'SCONJ', ADP, NOUN
+					correct_upos('SCONJ','ADV')     # 'advmod' is 'SCONJ', ADP, NOUN				
 					if re.match(r'.+ADP.+', deptable[i][8]):  
 						deptable[i][7] = deprel[0]+":"+"case"
 					if re.match(r'.+NOUN.+', deptable[i][8]):  
-						deptable[i][7] = deprel[0]+":"+"nmod"																
+						deptable[i][7] = deprel[0]+":"+"nmod"
+					if re.match(r'.+ADJ.+', deptable[i][8]):  
+						deptable[i][8] = "UposTag=ADV|Degree=Pos"																	
 				if rel =="det":                    # 'det' is ADJ, PART, CCONJ, X, NUM
 					correct_upos('ADJ','DET')
 					correct_upos('ADV','DET')				 	
@@ -107,6 +109,8 @@ for line in depdata:							#read the file to be corrected
 					if re.match(r'.+AD(V|J).+', deptable[i][8]):
 						deptable[i][8] = "UposTag=PUNCT|_"
 				if rel == "cop":
+					correct_upos('VERB','AUX')
+				if rel == "aux":
 					correct_upos('VERB','AUX')																				
 #			""" concatenate and print the result without the last tab """
 				for j in range(len(deptable[i])):
