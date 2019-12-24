@@ -7,7 +7,6 @@ dep	set-s25	11	12
 dep	set-s27	5	6
 dep	set-s27	8	7
 dep	set-s570	30	31
-dep	set-s945	14	15
 dep	set-s1492	13	22
 dep	set-s1492	17	22
 dep	set-s1502	25	32
@@ -65,7 +64,7 @@ dep	news-s72	5	4
 dep	news-s161	15	18
 dep	news-s171	29	2
 dep	news-s204	9	10
-dep	news-s204	15	10
+dep	news-s204	15	13
 dep	news-s215	23	29
 dep	news-s215	25	29
 dep	news-s241	15	14
@@ -82,6 +81,7 @@ rel	set-s1782	2	discourse
 rel	set-s3648	19	discourse
 rel	news-s43	4	discourse
 rel	set-s1156	25	nmod
+dep	set-s945	15	16
 dep	set-s945	16	9
 rel	set-s945	16	conj
 dep	set-s945	18	16
@@ -213,7 +213,7 @@ dep	set-s2914	13	17
 dep	set-s3154	24	23
 dep	news-s55	26	30
 dep	news-s68	16	20
-dep	news-s291	5	9
+dep	news-s291	5	10
 dep	news-s291	9	10
 dep	news-s319	24	12
 rel	set-s1946	8	punct
@@ -292,6 +292,7 @@ rel	set-s2499	14	discourse
 dep	set-s2513	12	14
 rel	set-s2513	12	discourse
 rel	set-s2635	23	obl
+dep	set-s2863	20	24
 dep	set-s2863	22	24
 rel	set-s2863	22	discourse
 dep	set-s3055	1	4
@@ -315,7 +316,7 @@ rel	set-s3611	12	nummod
 rel	set-s405	6	nmod
 rel	set-s1009	9	nmod
 dep	set-s25	11	13
-dep	set-s27	8	6
+dep	set-s27	8	7
 dep	set-s2606	2	5
 dep	news-s106	8	10
 dep	set-s1902	5	8
